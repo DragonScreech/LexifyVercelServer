@@ -4,6 +4,6 @@ Flask-Cors
 openai
 pdfminer.six
 python-dotenv
-# requests
+requests
 # waitress
 # Werkzeug
