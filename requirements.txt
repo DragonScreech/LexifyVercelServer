@@ -1,6 +1,6 @@
 Flask
 Flask-Cors
-# moviepy
+moviepy
 openai
 pdfminer.six
 python-dotenv
