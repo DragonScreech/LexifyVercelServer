@@ -81,7 +81,7 @@ def genScript():
         else: 
             generated_text = createScript(prompt_text + f"Split the story into {numImages} parts like so: Part 1: text  Part 2: text and so on. DO NOT make the part markers in headings just leave them as plain text. Make sure to keep fairly short. Reading it should take 1 - 2 minutes. {language_text}", False)
 
-    time.sleep(16)
+    time.sleep(2)
 
     return generated_text
 
