@@ -2,7 +2,7 @@ Flask
 Flask-Cors
 # moviepy
 openai
-pdfminer
+pdfminer.six
 python-dotenv
 # requests
 # waitress
