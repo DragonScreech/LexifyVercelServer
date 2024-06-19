@@ -3,6 +3,7 @@ from pdfminer.high_level import extract_text
 from openai import OpenAI
 import os
 from dotenv import load_dotenv
+import time
 load_dotenv()
 
 app = Flask(__name__)
@@ -79,6 +80,8 @@ def genScript():
             generated_text = createScript(prompt_text + f"Split the story into {numImages} parts like so: Part 1: text  Part 2: text and so on. DO NOT make the part markers in headings just leave them as plain text. Make sure to keep fairly short. Reading it should take 1 - 2 minutes. {language_text} Also, make sure to use this information: {pdfText}", False)
         else: 
             generated_text = createScript(prompt_text + f"Split the story into {numImages} parts like so: Part 1: text  Part 2: text and so on. DO NOT make the part markers in headings just leave them as plain text. Make sure to keep fairly short. Reading it should take 1 - 2 minutes. {language_text}", False)
+
+    time.sleep(16)
 
     return generated_text
 
