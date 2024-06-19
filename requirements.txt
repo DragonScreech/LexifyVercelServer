@@ -1,8 +1,8 @@
 Flask
 Flask-Cors
-moviepy
-openai
-pdfminer
-requests
-waitress
-Werkzeug
+# moviepy
+# openai
+# pdfminer
+# requests
+# waitress
+# Werkzeug
