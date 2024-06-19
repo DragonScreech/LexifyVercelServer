@@ -39,7 +39,7 @@ def createScript(prompt, textReplaced):
           "role": 'user',
           "content": promptText
       },],
-      max_tokens=500,
+      max_tokens=100,
   )
   print(response.choices[0].message.content)
   return response.choices[0].message.content
