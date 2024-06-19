@@ -5,6 +5,7 @@ from dotenv import load_dotenv
 import re
 import requests
 import time
+import tempfile
 
 load_dotenv()
 
@@ -19,10 +20,12 @@ def genImages():
     image_paths = []
     image_urls = []
     
+    temp_dir = tempfile.gettempdir()  # Get the system temporary directory
+    
     if 'images' in request.files:
         image_files = request.files.getlist('images')
         for index, image in enumerate(image_files):
-            img_temp_path = f'image_{index}_{uid}.png'
+            img_temp_path = os.path.join(temp_dir, f'image_{index}_{uid}.png')
             image.save(img_temp_path)
             image_paths.append(img_temp_path)
     
@@ -30,14 +33,14 @@ def genImages():
         if imageSize:
             image_urls = createImages(text, imageSize)
             for index, image_url in enumerate(image_urls):
-                img_temp_path = f'image_{index}_{uid}.png'
+                img_temp_path = os.path.join(temp_dir, f'image_{index}_{uid}.png')
                 download_image(image_url, img_temp_path)
                 image_paths.append(img_temp_path)
 
     if image_urls:
-      return jsonify(image_urls=image_urls, image_paths=image_paths), 200
+        return jsonify(image_urls=image_urls, image_paths=image_paths), 200
     else:
-      return jsonify(message='OK'), 200
+        return jsonify(message='OK'), 200
     
 def createImages(textPrompt, imageSize, retries=3, delay=2):
     images = []
@@ -72,12 +75,14 @@ def createImages(textPrompt, imageSize, retries=3, delay=2):
     print(images)
     return images
 
-
 def download_image(url, path):
-  """Download an image from a URL to a local path."""
-  response = requests.get(url)
-  if response.status_code == 200:
-    with open(path, 'wb') as file:
-      file.write(response.content)
-  else:
-    print(f"Failed to download {url}")
+    """Download an image from a URL to a local path."""
+    response = requests.get(url)
+    if response.status_code == 200:
+        with open(path, 'wb') as file:
+            file.write(response.content)
+    else:
+        print(f"Failed to download {url}")
+
+if __name__ == '__main__':
+    app.run()
