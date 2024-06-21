@@ -14,7 +14,9 @@ def genVideoNoSubtitles():
     # Paths for temporary storage
     temp_dir = tempfile.gettempdir()
     audio_path = os.path.join(temp_dir, f'speech_{uid}.mp3')
+    print(audio_path)
     image_paths = [os.path.join(temp_dir, f'image_{index}_{uid}.png') for index in range(numImages)]
+    print(image_paths)
 
     # Save the uploaded audio file
     if 'audio' not in request.files:
@@ -31,6 +33,7 @@ def genVideoNoSubtitles():
 
     # Create video with audio
     temp_video_path = os.path.join(temp_dir, f'final_video_{uid}.mov')
+    print(temp_video_path)
     create_video_with_audio(audio_path, image_paths, numImages, temp_video_path)
 
     return send_file(temp_video_path, as_attachment=True, download_name='final_video.mov')
@@ -47,7 +50,9 @@ def create_video_with_audio(audio_path, image_paths, num_images, output_path="fi
     video_clip = video_clip.set_audio(audio_clip)
 
     # Write the final video to file
+    print('Output before: ' + output_path)
     video_clip.write_videofile(output_path, fps=24, codec='libx264', preset='ultrafast')
+    print("Output After: " + output_path)
 
 if __name__ == '__main__':
     app.run()
