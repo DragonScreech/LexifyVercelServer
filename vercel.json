@@ -2,8 +2,7 @@
   "version": 2,
   "functions": {
     "api/*.py": {
-      "maxDuration": 250,
-      "excludeFiles": "**/*"
+      "maxDuration": 250
     }
   }
 }
