@@ -15,6 +15,7 @@ def genVideoNoSubtitles():
     temp_dir = tempfile.gettempdir()
     audio_path = os.path.join(temp_dir, f'speech_{uid}.mp3')
     print(audio_path)
+    video_path = os.path.join(temp_dir, f'sigmavid.mov')
     image_paths = [os.path.join(temp_dir, f'image_{index}_{uid}.png') for index in range(numImages)]
     print(image_paths)
 
@@ -24,6 +25,11 @@ def genVideoNoSubtitles():
     audio_file = request.files['audio']
     audio_file.save(audio_path)
     print('Audio saved!')
+
+    if 'video' in request.files:
+        video_file = request.files['video']
+        video_file.save(video_path)
+        print('Vid Saved! 😊😊😊')
 
     # Save the uploaded image files
     for index in range(numImages):
