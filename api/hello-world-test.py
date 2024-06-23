@@ -5,7 +5,7 @@ import os
 
 app = Flask(__name__)
 
-@app.route('/api/hello-world-test ')
+@app.route('/api/hello-world-test')
 def hello_world_video():
     # Create a text clip
     text_clip = TextClip("Hello World", fontsize=70, color='white', bg_color='black', size=(640, 480))
