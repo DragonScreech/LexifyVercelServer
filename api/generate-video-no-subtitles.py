@@ -1,6 +1,7 @@
 from flask import Flask, request, send_file, jsonify
 from moviepy.editor import ImageSequenceClip, AudioFileClip
 import os
+import io
 import tempfile
 
 app = Flask(__name__)
@@ -15,7 +16,6 @@ def genVideoNoSubtitles():
     temp_dir = tempfile.gettempdir()
     audio_path = os.path.join(temp_dir, f'speech_{uid}.mp3')
     print(audio_path)
-    video_path = os.path.join(temp_dir, f'sigmavid.mov')
     image_paths = [os.path.join(temp_dir, f'image_{index}_{uid}.png') for index in range(numImages)]
     print(image_paths)
 
@@ -25,11 +25,6 @@ def genVideoNoSubtitles():
     audio_file = request.files['audio']
     audio_file.save(audio_path)
     print('Audio saved!')
-
-    if 'video' in request.files:
-        video_file = request.files['video']
-        video_file.save(video_path)
-        print('Vid Saved! 😊😊😊')
 
     # Save the uploaded image files
     for index in range(numImages):
@@ -42,11 +37,13 @@ def genVideoNoSubtitles():
     # Create video with audio
     temp_video_path = os.path.join(temp_dir, f'final_video_{uid}.mov')
     print(temp_video_path)
-    create_video_with_audio(audio_path, image_paths, numImages, temp_video_path)
+    video_stream = io.BytesIO()
+    create_video_with_audio(audio_path, image_paths, numImages, video_stream)
+    video_stream.seek(0)
 
-    return send_file(temp_video_path, as_attachment=True, download_name='final_video.mov')
+    return send_file(video_stream, as_attachment=True, download_name='final_video.mov')
 
-def create_video_with_audio(audio_path, image_paths, num_images, output_path="final_video.mov"):
+def create_video_with_audio(audio_path, image_paths, num_images, output_path):
     audio_clip = AudioFileClip(audio_path)
     audio_duration = audio_clip.duration  # Get audio duration in seconds
 
