@@ -28,11 +28,9 @@ def genVideoNoSubtitles():
     # Create video without audio
     temp_video_path = os.path.join(temp_dir, f'final_video_{uid}.mov')
     print(temp_video_path)
-    video_stream = io.BytesIO()
-    create_video_without_audio(image_paths, numImages, video_stream)
-    video_stream.seek(0)
+    create_video_without_audio(image_paths, numImages, temp_video_path)
 
-    return send_file(video_stream, as_attachment=True, download_name='final_video.mov')
+    return send_file(temp_video_path, as_attachment=True, download_name='final_video.mov')
 
 def create_video_without_audio(image_paths, num_images, output_path):
     # Set a fixed display duration for each image
