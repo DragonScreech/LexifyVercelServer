@@ -55,9 +55,7 @@ def create_video_with_audio(audio_path, image_paths, num_images, output_path):
     video_clip = video_clip.set_audio(audio_clip)
 
     # Write the final video to file
-    print('Output before: ' + output_path)
     video_clip.write_videofile(output_path, fps=24, codec='libx264', preset='ultrafast')
-    print("Output After: " + output_path)
 
 if __name__ == '__main__':
     app.run()
