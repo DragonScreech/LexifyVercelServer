@@ -23,6 +23,7 @@ def genVideoNoSubtitles():
         return jsonify({"error": "Audio file is required"}), 400
     audio_file = request.files['audio']
     audio_file.save(audio_path)
+    print('Audio saved!')
 
     # Save the uploaded image files
     for index in range(numImages):
@@ -30,6 +31,7 @@ def genVideoNoSubtitles():
             return jsonify({"error": f"Image file image_{index} is required"}), 400
         image_file = request.files[f'image_{index}']
         image_file.save(image_paths[index])
+        print(f'image{index} saved!')
 
     # Create video with audio
     temp_video_path = os.path.join(temp_dir, f'final_video_{uid}.mov')
