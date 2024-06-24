@@ -1,10 +1,12 @@
 from flask import Flask, request, send_file, jsonify
+from flask_cors import CORS
 from moviepy.editor import ImageSequenceClip
 import os
 import io
 import tempfile
 
 app = Flask(__name__)
+CORS(app)
 
 @app.route('/api/generate-video-no-subtitles', methods=['POST'])
 def genVideoNoSubtitles():
