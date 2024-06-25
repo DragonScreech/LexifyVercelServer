@@ -11,7 +11,7 @@ CORS(app)
 @app.route('/api/generate-video-no-subtitles', methods=['POST'])
 def genVideoNoSubtitles():
     uid = request.form['uid']
-    duration = request.form['duration']
+    duration = int(request.form['duration'])
     strNumImages = request.form['imageCount']
     numImages = int(strNumImages)
 
