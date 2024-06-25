@@ -22,7 +22,7 @@ def generate_script():
         language_text = f'Make the script in {language}. However, make sure to leave the Part markers in english' if language else ''
         generated_text = create_script(prompt_text + f"Split the story into {num_images} parts like so: Part 1: text  Part 2: text and so on. DO NOT make the part markers in headings just leave them as plain text. Make sure to keep fairly short. Reading it should take 1 - 2 minutes. {language_text}", False)
 
-    return jsonify(generated_text)
+    return generated_text
 
 def create_script(prompt, text_replaced):
     if not text_replaced:
