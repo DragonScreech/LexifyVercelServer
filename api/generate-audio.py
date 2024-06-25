@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, send_file
 from openai import OpenAI
 import os
 import re
@@ -17,7 +17,7 @@ def genAudio():
     text = request.form['text']
     audio_path = os.path.join('/tmp', f'speech_{uid}.mp3')
     createAudio(text, uid, audio_path)
-    return jsonify({"message": "Audio generated", "audio_path": audio_path}), 200
+    return send_file(audio_path, as_attachment=True, download_name='speech.mp3')
 
 def createAudio(text, uid, audio_path):
     cleaned_text = re.sub(r'Part \d+:', '', text)
