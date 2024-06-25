@@ -11,6 +11,7 @@ CORS(app)
 @app.route('/api/generate-video-no-subtitles', methods=['POST'])
 def genVideoNoSubtitles():
     uid = request.form['uid']
+    duration = request.form['duration']
     strNumImages = request.form['imageCount']
     numImages = int(strNumImages)
 
@@ -30,13 +31,13 @@ def genVideoNoSubtitles():
     # Create video without audio
     temp_video_path = os.path.join(temp_dir, f'final_video_{uid}.mov')
     print(temp_video_path)
-    create_video_without_audio(image_paths, numImages, temp_video_path)
+    create_video_without_audio(image_paths, numImages, duration, temp_video_path)
 
     return send_file(temp_video_path, as_attachment=True, download_name='final_video.mov')
 
-def create_video_without_audio(image_paths, num_images, output_path):
+def create_video_without_audio(image_paths, num_images, duration, output_path):
     # Set a fixed display duration for each image
-    image_display_duration = 1  # Display each image for 1 second
+    image_display_duration = duration/num_images  # Display each image for 1 second
 
     # Create ImageSequenceClip
     video_clip = ImageSequenceClip(image_paths, durations=[image_display_duration] * num_images)
