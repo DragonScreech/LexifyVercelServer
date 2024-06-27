@@ -1,4 +1,5 @@
 from flask import Flask, request, jsonify, send_file
+from flask_cors import CORS
 from openai import OpenAI
 import os
 import re
@@ -9,6 +10,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 app = Flask(__name__)
+CORS(app)
 client = OpenAI(api_key=os.getenv('OPEN_AI_API_KEY'))
 
 @app.route('/api/generate-audio', methods=['POST'])

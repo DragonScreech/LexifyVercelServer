@@ -1,11 +1,13 @@
 from openai import OpenAI
 from flask import Flask, request, jsonify
+from flask_cors import CORS
 import os
 from dotenv import load_dotenv
 
 load_dotenv()
 
 app = Flask(__name__)
+CORS(app)
 client = OpenAI(api_key=os.getenv('OPEN_AI_API_KEY'))
 
 @app.route('/api/generate-script', methods=['POST'])
