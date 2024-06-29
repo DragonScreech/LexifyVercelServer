@@ -4,6 +4,7 @@ from moviepy.editor import ImageSequenceClip
 import os
 import tempfile
 import requests
+import firebase_admin
 
 app = Flask(__name__)
 CORS(app)
