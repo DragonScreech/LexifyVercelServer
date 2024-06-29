@@ -12,7 +12,7 @@ CORS(app)
 def genVideoNoSubtitles():
     uid = request.form['uid']
     strDuration = request.form['duration']
-    duration = int(strDuration)
+    duration = float(strDuration)  # Use float instead of int
     strNumImages = request.form['imageCount']
     numImages = int(strNumImages)
     
@@ -58,3 +58,4 @@ def create_video_without_audio(image_paths, num_images, duration, output_path):
 
 if __name__ == '__main__':
     app.run()
+
