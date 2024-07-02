@@ -1,8 +1,8 @@
-firebase-admin
+# firebase-admin
 Flask
 Flask-Cors
 moviepy
-# openai
+openai
 pdfminer.six
 python-dotenv
 requests
