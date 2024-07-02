@@ -13,6 +13,12 @@ app = Flask(__name__)
 CORS(app)
 client = OpenAI(api_key=os.getenv('OPEN_AI_API_KEY'))
 
+@app.after_request
+def add_security_headers(response):
+    response.headers['Cross-Origin-Opener-Policy'] = 'same-origin'
+    response.headers['Cross-Origin-Embedder-Policy'] = 'require-corp'
+    return response
+
 @app.route('/api/generate-audio', methods=['POST'])
 def genAudio():
     uid = request.form['uid']
