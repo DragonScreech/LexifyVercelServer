@@ -16,7 +16,7 @@ def add_security_headers(response):
     response.headers['Cross-Origin-Embedder-Policy'] = 'require-corp'
     return response
 
-@app.route('/definitions', methods = ['POST', 'GET'])
+@app.route('/api/definitions', methods = ['POST', 'GET'])
 def Server_Def():
     transcript = request.form.get('transcript')
     return createDefinitions(transcript)

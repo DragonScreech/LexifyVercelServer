@@ -16,7 +16,7 @@ def add_security_headers(response):
     response.headers['Cross-Origin-Embedder-Policy'] = 'require-corp'
     return response
 
-@app.route('/flashcards', methods = ['POST', 'GET'])
+@app.route('/api/flashcards', methods = ['POST', 'GET'])
 def Server_FlashCards():
     transcript = request.form.get('transcript')
     return createFlashcards(transcript)

@@ -16,7 +16,7 @@ def add_security_headers(response):
     response.headers['Cross-Origin-Embedder-Policy'] = 'require-corp'
     return response
 
-@app.route('/keypoints', methods = ['POST', 'GET'])
+@app.route('/api/keypoints', methods = ['POST', 'GET'])
 def Server_Keys():
     transcript = request.form.get('transcript')
     return createKeyPoints(transcript)

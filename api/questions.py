@@ -16,7 +16,7 @@ def add_security_headers(response):
     response.headers['Cross-Origin-Embedder-Policy'] = 'require-corp'
     return response
 
-@app.route('/questions', methods = ['POST', 'GET'])
+@app.route('/api/questions', methods = ['POST', 'GET'])
 def Server_Questions():
     transcript = request.form.get('transcript')
     return createQuestions(transcript)
