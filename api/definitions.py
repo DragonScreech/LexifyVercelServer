@@ -16,46 +16,56 @@ def add_security_headers(response):
     response.headers['Cross-Origin-Embedder-Policy'] = 'require-corp'
     return response
 
-@app.route('/api/definitions', methods = ['POST', 'GET'])
+@app.route('/api/definitions', methods=['POST', 'GET'])
 def Server_Def():
     transcript = request.form.get('transcript')
+    
+    if not transcript:
+        return jsonify({"error": "transcript is required"}), 400
+    
     return createDefinitions(transcript)
 
 def createDefinitions(prompt):
-  response = client.chat.completions.create(
-      model="gpt-4-turbo",
-      messages=[{
-         "role": 'system',
-         "content": 'You are an ai assisant that makes a list of vocab words and their definitions using the text the user will provide. Format it like this: 1. Vocab word - Definition 2. Vocab word - Definition and so on. Leave it all as plain text and dont include any bold or heading text'
-      }, {
-          "role": 'user',
-          "content": prompt
-      },],
-      max_tokens=500,
-  )
-  text = response.choices[0].message.content
-  word_def_dict = {}
+    try:
+        response = client.chat.completions.create(
+            model="gpt-4-turbo",
+            messages=[{
+                "role": 'system',
+                "content": 'You are an AI assistant that makes a list of vocab words and their definitions using the text the user will provide. Format it like this: 1. Vocab word - Definition 2. Vocab word - Definition and so on. Leave it all as plain text and dont include any bold or heading text.'
+            }, {
+                "role": 'user',
+                "content": prompt
+            }],
+            max_tokens=500,
+        )
+        text = response.choices[0].message.content
+        word_def_dict = {}
 
-    # Split the input text into lines
-  lines = text.split('\n')
+        # Split the input text into lines
+        lines = text.split('\n')
 
-    # Process each line individually
-  for line in lines:
-    # Strip leading and trailing whitespace
-    line = line.strip()
+        # Process each line individually
+        for line in lines:
+            # Strip leading and trailing whitespace
+            line = line.strip()
 
-    # Find the first occurrence of " - " which separates word and definition
-    split_index = line.find(" - ")
-    if split_index == -1:
-      # If no " - " is found, skip this line
-      continue
+            # Find the first occurrence of " - " which separates word and definition
+            split_index = line.find(" - ")
+            if split_index == -1:
+                # If no " - " is found, skip this line
+                continue
 
-    # Extract the word and definition
-    word = line[line.find(" ") + 1:split_index].strip()
-    definition = line[split_index + 3:].strip()
+            # Extract the word and definition
+            word = line[line.find(" ") + 1:split_index].strip()
+            definition = line[split_index + 3:].strip()
 
-    # Add to the dictionary
-    word_def_dict[word] = definition
+            # Add to the dictionary
+            word_def_dict[word] = definition
 
-  print(word_def_dict)
-  return word_def_dict
+        print(word_def_dict)
+        return jsonify(word_def_dict)
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+if __name__ == '__main__':
+    app.run(debug=True)
